@@ -1,13 +1,68 @@
 import { View, Text, Button } from 'react-native'
-import { router } from 'expo-router'
-import React from 'react'
+import { router, Link } from 'expo-router'
+import CustomButton from '@/components/CustomButton'
+import CustomInput from '@/components/CustomInput'
+import { useState } from 'react'
+import { Alert } from 'react-native'
 
 const SignUp = () => {
+
+
+  const [isSubmitting, setIsSubmitting ] = useState(false);
+  const [form, SetForm] = useState({name: '', email : '', password : ''});
+
+  const submit = async () => {
+    if(!form.email || !form.password || form.name) return Alert.alert('Error', 'Please Enter Valid Credentials');
+
+    setIsSubmitting(true);
+
+    try{
+      //Calling Appwrite Sign Up Function
+      Alert.alert('Success', 'User Signed Up Successfully')
+      router.replace('/')
+    }
+    catch(error: any){
+      Alert.alert('Error', error.message);
+    }
+    finally{
+      setIsSubmitting(false);
+    }
+  }
+
   return (
-    <View>
-      <Text>SignUp</Text>
-       <Button title="Sign In" onPress={() => router.push("/SignIn")} />
-      
+    <View className='gap-10 bg-white rounded-lg p-5 mt-5'>
+        <CustomInput
+        placeholder="Enter your Name"
+        value={form.name}
+        onChangeText ={(text) => SetForm((prev)=> ({...prev, name: text}))}
+        label="Name"
+        />
+        <CustomInput
+        placeholder="Email"
+        value={form.email}
+        onChangeText ={(text) => SetForm((prev)=> ({...prev, email: text}))}
+        label="Email"
+        keyboardType="email-address"
+        />
+        <CustomInput
+        placeholder="Password"
+        value={form.password}
+        onChangeText ={(text) => SetForm((prev) => ({...prev, password : text}))}
+        label="Password"
+        secureTextEntry={true}
+        />
+        <CustomButton
+        title="Sign Up"
+        isLoading={isSubmitting}
+        onPress={submit}
+        />
+
+      <View className='flex justify-center mt-5 flex-row gap-2'>
+        <Text className='text-gray-black base-regular'>Already have an account ?</Text>
+        <Link href='/SignIn' className='base-bold text-primary'>
+        Sign Up
+        </Link>
+      </View>
     </View>
   )
 }
