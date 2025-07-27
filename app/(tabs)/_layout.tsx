@@ -10,7 +10,7 @@ import {images} from "@/constants/index"
 const TabBarIcon = ({focused, icon, title}: TabBarIconProps) => (
     <View className='tab-icon'>
         <Image source={icon} className="size-7" resizeMode="contain" tintColor={focused ? '#FE8C00' : '#5D5F6D'}/>
-        <Text className={cn(focused ? "text-primary" : "text-gray-100")} >
+        <Text className={cn("text-sm font-bold", focused ? "text-primary" : "text-gray-300")} >
             {title}
         </Text>
     </View>
@@ -55,14 +55,14 @@ const TabLayout = () => {
             }}
         />
                 <Tabs.Screen
-            name = "Search"
+            name = "search"
             options ={{
                 title: 'Search',
                 tabBarIcon: ({focused}) => <TabBarIcon focused={focused} title="Search" icon={images.search} />
             }}
         />
                 <Tabs.Screen
-            name = "Cart"
+            name = "cart"
             options ={{
                 title: 'Cart',
                 tabBarIcon: ({focused}) => <TabBarIcon focused={focused} title="Cart" icon={images.bag} />
@@ -71,7 +71,7 @@ const TabLayout = () => {
                 <Tabs.Screen
             name = "profile"
             options ={{
-                title: 'profile',
+                title: 'Profile',
                 tabBarIcon: ({focused}) => <TabBarIcon focused={focused} title="Profile" icon={images.person} />
             }}
         />

@@ -1,12 +1,17 @@
-import { CreateUserParams, SignInParams } from "@/type";
-import { Account, Avatars, Client, Databases, ID, Query } from "react-native-appwrite";
+import { CreateUserParams, GetMenuParams, SignInParams } from "@/type";
+import { Account, Avatars, Client, Databases, ID, Query , Storage} from "react-native-appwrite";
 
 export const appwriteConfig = {
  endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
  platform: "com.saiesh_techscribe.fooddelivery",
  projectId : process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
- databseId: "68854758001196aeeea7",
- userCollectionId: "6885477b0009a24283a1"
+ databaseId: "68854758001196aeeea7",
+ bucketId: "68862386003010c048f6",
+ userCollectionId: "6885477b0009a24283a1",
+ categoriesCollectionId: "68861b77003614e7c335",
+ menuCollectionId: "68861bef0038c55aa7b6",
+ customizationsCollectionId: "6886220f002698698db7",
+ menuCustomizationsCollectionId: "688622b30037fe381ad9"
 }
 
 export const client = new Client();
@@ -18,6 +23,7 @@ client
 
 export const account = new Account(client);
 export const databases = new Databases(client);
+export const storage = new Storage(client);
 const avatars = new Avatars(client);
 
 export const createUser = async ({email, password, name} : CreateUserParams) => {
@@ -31,7 +37,7 @@ export const createUser = async ({email, password, name} : CreateUserParams) => 
         const avatarUrl = avatars.getInitialsURL(name);
 
         return await databases.createDocument(
-            appwriteConfig.databseId,
+            appwriteConfig.databaseId,
             appwriteConfig.userCollectionId,
             ID.unique(),
             {   email,name,
@@ -63,7 +69,7 @@ export const getCurrentUser = async () => {
         if(!currentAccount) throw Error;
 
         const currentUser = await databases.listDocuments(
-            appwriteConfig.databseId,
+            appwriteConfig.databaseId,
             appwriteConfig.userCollectionId,
             [Query.equal('accountId', currentAccount.$id)]
         )
@@ -78,3 +84,37 @@ export const getCurrentUser = async () => {
         throw new Error(e as string);        
     }
 }
+
+export const getMenu = async ({category, query}: GetMenuParams) => {
+        try{
+            const queries: string[] =[];
+            if(category) queries.push(Query.equal('categories', category));
+            if(query) queries.push(Query.search('name', query));
+
+            const menus = await databases.listDocuments(
+                appwriteConfig.databaseId,
+                appwriteConfig.menuCollectionId,
+                queries
+            )
+
+            return menus.documents
+
+        }
+        catch(e){
+            throw new Error(e as string)
+        }
+}
+
+export const getCategories = async () => {
+    try{
+        const categories = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.categoriesCollectionId
+        )
+        return categories.documents;
+    }
+    catch(e){
+        throw new Error(e as string)
+    }
+}
+

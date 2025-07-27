@@ -69,7 +69,7 @@ const SignUp = () => {
       <View className='flex justify-center mt-5 flex-row gap-2'>
         <Text className='text-gray-black base-regular'>Already have an account ?</Text>
         <Link href='/SignIn' className='base-bold text-primary'>
-        Sign Up
+        Sign In
         </Link>
       </View>
     </View>
