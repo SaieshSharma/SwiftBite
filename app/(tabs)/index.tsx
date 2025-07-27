@@ -1,10 +1,15 @@
-import CartButton from "@/components/CartButton";
-import { images, offers } from "@/constants";
+//Internal
 import useAuthStore from "@/store/auth.store";
 import cn from "clsx";
 import { Fragment } from "react";
-import { FlatList, Image, Pressable, Text, TouchableOpacity, View,  } from "react-native";
+import { FlatList, Image, Pressable, Text, TouchableOpacity, View, Button } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as Sentry from '@sentry/react-native'
+
+//External
+import CartButton from "@/components/CartButton";
+import { images, offers } from "@/constants";
+
 
 
 export default function Index() {
