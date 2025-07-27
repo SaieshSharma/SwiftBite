@@ -4,6 +4,7 @@ import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 import { useState } from 'react'
 import { Alert } from 'react-native'
+import { createUser } from '@/lib/appwrite'
 
 const SignUp = () => {
 
@@ -12,14 +13,22 @@ const SignUp = () => {
   const [form, SetForm] = useState({name: '', email : '', password : ''});
 
   const submit = async () => {
-    if(!form.email || !form.password || form.name) return Alert.alert('Error', 'Please Enter Valid Credentials');
+
+    const {email,password,name} = form;
+
+    if(!email || !password || !name) return Alert.alert('Error', 'Please Enter Valid Credentials');
 
     setIsSubmitting(true);
 
     try{
       //Calling Appwrite Sign Up Function
-      Alert.alert('Success', 'User Signed Up Successfully')
-      router.replace('/')
+
+      await createUser({
+        email,
+        password,
+        name
+      })
+      router.replace('/');
     }
     catch(error: any){
       Alert.alert('Error', error.message);
