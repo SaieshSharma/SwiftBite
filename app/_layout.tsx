@@ -42,7 +42,7 @@ export default Sentry.wrap(function RootLayout() {
   useEffect(() => {
     fetchAuthenticatedUser()
   }, []);
-
+  
   if(!fontsLoaded || isLoading) return null;
 
   return <Stack  screenOptions={{headerShown: false}}/>;

@@ -1,19 +1,16 @@
-import { create } from 'zustand';
-
-type User = {
-    name: string;
-    email: string;
-    avatar: string;
-}
+import { getCurrentUser } from '@/lib/appwrite';
+import { User } from '@sentry/react-native'
+import { create } from 'zustand'
 
 type AuthState = {
-    isAuthenticated: boolean;
+    isAuthenticated: boolean
     user: User | null;
-    isLoading: boolean;
+    isLoading: boolean
 
-    setIsAuthenticated: (value: boolean) => void;
-    setUser: (user: User | null) => void;
-    setLoading: (loading: boolean) => void;
+    setIsAuthenticated: (value :boolean) => void
+    setUser: (user: User | null) => void
+    setLoading : (loading : boolean) => void
+    
 
     fetchAuthenticatedUser: () => Promise<void>;
 }
@@ -21,26 +18,30 @@ type AuthState = {
 const useAuthStore = create<AuthState>((set) => ({
     isAuthenticated: false,
     user: null,
-    isLoading: false,
+    isLoading: true,
 
-    setIsAuthenticated: (value) => set({ isAuthenticated: value }),
-    setUser: (user) => set({ user }),
-    setLoading: (value) => set({isLoading: value}),
+    setIsAuthenticated: (value) => set({isAuthenticated: value}),
+    setUser: (user) => set({user}),
+    setLoading: (value) => set({isLoading : value}),
 
-    fetchAuthenticatedUser: async () => {
+    fetchAuthenticatedUser: async() => {
         set({isLoading: true});
 
-        try {
-            // For now, just set loading to false
-            // You can implement actual authentication later
-            set({ isAuthenticated: false, user: null })
-        } catch (e) {
+        try{
+            const user = await getCurrentUser();
+
+            if(user) set({isAuthenticated: true, user: user as User})
+            else set({isAuthenticated: false, user: null })
+        }
+        catch(e){
             console.log('fetchAuthenticatedUser error', e);
-            set({ isAuthenticated: false, user: null })
-        } finally {
-            set({ isLoading: false });
+            set({isAuthenticated: false, user: null});
+        }
+        finally{
+            set({isLoading: false})
         }
     }
+
 }))
 
 export default useAuthStore;
