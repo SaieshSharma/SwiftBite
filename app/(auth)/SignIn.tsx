@@ -7,9 +7,10 @@ import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 import { signIn } from '@/lib/appwrite'
 import * as Sentry from "@sentry/react-native"
+import useAuthStore from '@/store/auth.store'
 
 const SignIn = () => {
-
+  const { fetchAuthenticatedUser } = useAuthStore();
 
   const [isSubmitting, setIsSubmitting ] = useState(false);
   const [form, SetForm] = useState({email : '', password : ''});
@@ -25,8 +26,9 @@ const SignIn = () => {
 
       await signIn({
         email, password
-      })
-      router.replace('/')
+      });
+      await fetchAuthenticatedUser(); // Crucial: Update frontend state
+      router.replace('/');
     }
     catch(error: any){
       Alert.alert('Error', error.message);

@@ -5,9 +5,10 @@ import CustomInput from '@/components/CustomInput'
 import { useState } from 'react'
 import { Alert } from 'react-native'
 import { createUser } from '@/lib/appwrite'
+import useAuthStore from '@/store/auth.store'
 
 const SignUp = () => {
-
+  const { fetchAuthenticatedUser } = useAuthStore();
 
   const [isSubmitting, setIsSubmitting ] = useState(false);
   const [form, SetForm] = useState({name: '', email : '', password : ''});
@@ -27,7 +28,8 @@ const SignUp = () => {
         email,
         password,
         name
-      })
+      });
+      await fetchAuthenticatedUser(); // Update frontend state after signup and auto-login
       router.replace('/');
     }
     catch(error: any){
