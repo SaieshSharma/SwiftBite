@@ -36,13 +36,8 @@ export const createUser = async ({email, password, name} : CreateUserParams) => 
 
         const avatarUrl = avatars.getInitialsURL(name);
 
-<<<<<<< HEAD
-        return await databases.createDocument(
-            appwriteConfig.databaseId,
-=======
         await databases.createDocument(
-            appwriteConfig.databseId,
->>>>>>> 3b0f49beebc9a0f7f5c6eba5cf9837b3cd6ad600
+            appwriteConfig.databaseId,
             appwriteConfig.userCollectionId,
             ID.unique(),
             {   email,name,

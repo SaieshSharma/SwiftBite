@@ -1,16 +1,15 @@
-import { View, Text, Button } from 'react-native'
-import { router, Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 import { useState } from 'react'
-import { Alert } from 'react-native'
+import { Alert, Text, View } from 'react-native'
 
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 import { signIn } from '@/lib/appwrite'
-import * as Sentry from "@sentry/react-native"
 import useAuthStore from '@/store/auth.store'
+import * as Sentry from "@sentry/react-native"
 
 const SignIn = () => {
-  const { fetchAuthenticatedUser } = useAuthStore();
+  const { fetchAuthenticatedUser, user, isAuthenticated } = useAuthStore();
 
   const [isSubmitting, setIsSubmitting ] = useState(false);
   const [form, SetForm] = useState({email : '', password : ''});
@@ -22,8 +21,13 @@ const SignIn = () => {
     setIsSubmitting(true);
 
     try{
-      //Calling Appwrite Sign In Function
+      // Check if user is already authenticated
+      if (isAuthenticated && user) {
+        router.replace('/');
+        return;
+      }
 
+      //Calling Appwrite Sign In Function
       await signIn({
         email, password
       });
@@ -31,8 +35,15 @@ const SignIn = () => {
       router.replace('/');
     }
     catch(error: any){
-      Alert.alert('Error', error.message);
-      Sentry.captureEvent(error);
+      // Handle the specific session error
+      if (error.message && error.message.includes('session is active')) {
+        // User is already logged in, just update state and redirect
+        await fetchAuthenticatedUser();
+        router.replace('/');
+      } else {
+        Alert.alert('Error', error.message);
+        Sentry.captureEvent(error);
+      }
     }
     finally{
       setIsSubmitting(false);
