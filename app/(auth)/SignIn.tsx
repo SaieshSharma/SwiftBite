@@ -4,10 +4,9 @@ import { Alert, Text, View } from 'react-native'
 
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
-import { signIn } from '@/lib/appwrite'
+import { signIn, account } from '@/lib/appwrite'
 import useAuthStore from '@/store/auth.store'
 import * as Sentry from "@sentry/react-native"
-import { getCurrentUser } from '@/lib/appwrite'
 
 const SignIn = () => {
   const { fetchAuthenticatedUser, user, isAuthenticated } = useAuthStore();
@@ -17,49 +16,34 @@ const SignIn = () => {
 
   const submit = async () => {
     const {email, password} = form;
-    if(!email || !password)  return Alert.alert('Error', 'Please Enter Valid Credentials');
+    if(!email || !password) return Alert.alert('Error', 'Please Enter Valid Credentials');
 
     setIsSubmitting(true);
 
-    try{
+    try {
       // Check if user is already authenticated
       if (isAuthenticated && user) {
         router.replace('/');
         return;
       }
 
-            // Try to get current user first (check if session exists)
+      // Clear any existing sessions first (for internal builds)
       try {
-        const currentUser = await getCurrentUser();
-        if (currentUser) {
-          // User already has an active session
-          await fetchAuthenticatedUser();
-          router.replace('/');
-          return;
-        }
-      } catch (error) {
-        // No active session, proceed with sign in
+        await account.deleteSessions();
+      } catch (clearError) {
+        // Ignore errors when clearing sessions
       }
 
-      //Calling Appwrite Sign In Function
-      await signIn({
-        email, password
-      });
-      await fetchAuthenticatedUser(); // Crucial: Update frontend state
+      // Now try to sign in
+      await signIn({ email, password });
+      await fetchAuthenticatedUser();
       router.replace('/');
-    }
-    catch(error: any){
-      // Handle the specific session error
-      if (error.message && error.message.includes('session is active')) {
-        // User is already logged in, just update state and redirect
-        await fetchAuthenticatedUser();
-        router.replace('/');
-      } else {
-        Alert.alert('Error', error.message);
-        Sentry.captureEvent(error);
-      }
-    }
-    finally{
+
+    } catch (error: any) {
+      console.log('Sign in error:', error);
+      Alert.alert('Error', error.message || 'Sign in failed');
+      Sentry.captureException(error);
+    } finally {
       setIsSubmitting(false);
     }
   }

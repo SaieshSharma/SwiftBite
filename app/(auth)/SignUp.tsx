@@ -4,8 +4,9 @@ import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 import { useState } from 'react'
 import { Alert } from 'react-native'
-import { createUser } from '@/lib/appwrite'
+import { createUser, account } from '@/lib/appwrite'
 import useAuthStore from '@/store/auth.store'
+import * as Sentry from "@sentry/react-native"
 
 const SignUp = () => {
   const { fetchAuthenticatedUser } = useAuthStore();
@@ -14,16 +15,21 @@ const SignUp = () => {
   const [form, SetForm] = useState({name: '', email : '', password : ''});
 
   const submit = async () => {
-
     const {email,password,name} = form;
 
-    if(!email || !password || !name) return Alert.alert('Error', 'Please Enter Valid Credentials');
+    if(!email || !password || !name) return Alert.alert('Error', 'Please Fill All Fields');
 
     setIsSubmitting(true);
 
     try{
-      //Calling Appwrite Sign Up Function
+      // Clear any existing sessions before sign up
+      try {
+        await account.deleteSessions();
+      } catch (clearError) {
+        // Ignore clear errors
+      }
 
+      // Calling Appwrite Sign Up Function
       await createUser({
         email,
         password,
@@ -33,7 +39,9 @@ const SignUp = () => {
       router.replace('/');
     }
     catch(error: any){
-      Alert.alert('Error', error.message);
+      console.log('Sign up error:', error);
+      Alert.alert('Error', error.message || 'Sign up failed');
+      Sentry.captureException(error);
     }
     finally{
       setIsSubmitting(false);

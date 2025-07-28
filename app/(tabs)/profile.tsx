@@ -6,7 +6,8 @@ import { images } from '@/constants';
 import { signOut } from '@/lib/appwrite';
 
 const Profile = () => {
-  const { user, setUser, setIsLoggedIn } = useAuthStore();
+
+ const { user, signOut: storeSignOut } = useAuthStore();
 
   const handleSignOut = async () => {
     Alert.alert(
@@ -22,9 +23,7 @@ const Profile = () => {
           style: "destructive",
           onPress: async () => {
             try {
-              await signOut();
-              setUser(null);
-              setIsLoggedIn(false);
+              await storeSignOut();
               router.replace('/SignIn');
             } catch (error) {
               Alert.alert("Error", "Failed to sign out");
@@ -112,17 +111,17 @@ const Profile = () => {
             </View>
 
             {/* User Details */}
-            <View className="flex-1">
-              <Text className="text-xl font-bold text-dark-100 mb-1">
-                {user?.username || 'User'}
-              </Text>
-              <Text className="text-gray-500 mb-2">
-                {user?.email || 'user@example.com'}
-              </Text>
-              <TouchableOpacity className="bg-primary/10 px-3 py-1 rounded-full self-start">
-                <Text className="text-primary text-sm font-medium">Premium Member</Text>
-              </TouchableOpacity>
-            </View>
+<View className="flex-1">
+  <Text className="text-xl font-bold text-dark-100 mb-1">
+    {user?.name || 'User'}  {/* Changed from username to name */}
+  </Text>
+  <Text className="text-gray-500 mb-2">
+    {user?.email || 'user@example.com'}
+  </Text>
+  <TouchableOpacity className="bg-primary/10 px-3 py-1 rounded-full self-start">
+    <Text className="text-primary text-sm font-medium">Premium Member</Text>
+  </TouchableOpacity>
+</View>
           </View>
         </View>
 
