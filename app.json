@@ -1,5 +1,10 @@
 {
   "expo": {
+    "updates": {
+      "enabled": true,
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/c708a55b-c030-4801-bfd1-87a7b40350b6"
+    },
     "name": "fast_food",
     "slug": "fast_food",
     "version": "1.0.0",
@@ -16,7 +21,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.saieshsharma.fast_food"
     },
     "web": {
       "bundler": "metro",
@@ -45,6 +51,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c708a55b-c030-4801-bfd1-87a7b40350b6"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }

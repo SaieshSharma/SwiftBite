@@ -5,10 +5,11 @@ import CustomHeader from "@/components/CustomHeader";
 import cn from "clsx";
 import CustomButton from "@/components/CustomButton";
 import CartItem from "@/components/CartItem";
+import { PaymentInfoStripeProps } from '@/type';
 
 const PaymentInfoStripe = ({ label,  value,  labelStyle,  valueStyle, }: PaymentInfoStripeProps) => (
     <View className="flex-between flex-row my-1">
-        <Text className={cn("paragraph-medium text-gray-200", labelStyle)}>
+        <Text className={cn("paragraph-medium text-black", labelStyle)}>
             {label}
         </Text>
         <Text className={cn("paragraph-bold text-dark-100", valueStyle)}>

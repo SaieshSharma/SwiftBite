@@ -85,24 +85,35 @@ export const getCurrentUser = async () => {
     }
 }
 
-export const getMenu = async ({category, query}: GetMenuParams) => {
-        try{
-            const queries: string[] =[];
-            if(category) queries.push(Query.equal('categories', category));
-            if(query) queries.push(Query.search('name', query));
-
-            const menus = await databases.listDocuments(
-                appwriteConfig.databaseId,
-                appwriteConfig.menuCollectionId,
-                queries
-            )
-
-            return menus.documents
-
+export const getMenu = async ({category, query, limit = 10}: GetMenuParams & {limit?: number}) => {
+    try{
+        const queries: string[] = [];
+        
+        // Filter by category name instead of ID
+        if(category && category !== 'all') {
+            queries.push(Query.equal('category_name', category));
         }
-        catch(e){
-            throw new Error(e as string)
+        
+        if(query) {
+            queries.push(Query.search('name', query));
         }
+        
+        if(limit) {
+            queries.push(Query.limit(limit));
+        }
+
+        const menus = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.menuCollectionId,
+            queries
+        )
+
+        return menus.documents
+
+    }
+    catch(e){
+        throw new Error(e as string)
+    }
 }
 
 export const getCategories = async () => {
@@ -118,3 +129,11 @@ export const getCategories = async () => {
     }
 }
 
+export const signOut = async () => {
+  try {
+    const session = await account.deleteSession('current');
+    return session;
+  } catch (error) {
+    throw new Error(error as string);
+  }
+};

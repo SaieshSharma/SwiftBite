@@ -5,15 +5,37 @@ import { Fragment } from "react";
 import { FlatList, Image, Pressable, Text, TouchableOpacity, View, Button } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Sentry from '@sentry/react-native'
+import { router } from "expo-router";
 
 //External
 import CartButton from "@/components/CartButton";
 import { images, offers } from "@/constants";
 
-
+// Define mapping for offers to categories
+const offerToCategoryMap: { [key: string]: string } = {
+  "SUMMER COMBO": "all", // or whatever category ID you want
+  "BURGER BASH": "Burgers",
+  "PIZZA PARTY": "Pizzas", 
+  "BURRITO DELIGHT": "Burritos"
+};
 
 export default function Index() {
   const { user } = useAuthStore();
+
+  const handleOfferPress = (offerTitle: string) => {
+    const categoryFilter = offerToCategoryMap[offerTitle];
+    
+    if (categoryFilter) {
+      // Navigate to search with category filter
+      router.push({
+        pathname: "/search",
+        params: { category: categoryFilter }
+      });
+    } else {
+      // Navigate to search without filter
+      router.push("/search");
+    }
+  };
 
   console.log("USER:", JSON.stringify(user, null, 2))
 
@@ -25,12 +47,12 @@ export default function Index() {
 
       return(
         <View>
-          <Pressable className={cn("offer-card", isEven ? "flex-row-reverse" : "flex-row")} 
-          style={{backgroundColor: item.color}}
-          android_ripple={{color: "#ffffff2"}}
+          <Pressable 
+            className={cn("offer-card", isEven ? "flex-row-reverse" : "flex-row")} 
+            style={{backgroundColor: item.color}}
+            android_ripple={{color: "#ffffff2"}}
+            onPress={() => handleOfferPress(item.title)}
           >
-          
-
             {({pressed}) => (
               <Fragment>
                 <View className={"h-full w-1/2"}>

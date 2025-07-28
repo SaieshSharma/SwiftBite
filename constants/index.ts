@@ -41,6 +41,7 @@ import salad from "@/assets/images/salad.png";
 import success from "@/assets/images/success.png";
 import tomatoes from "@/assets/images/tomatoes.png";
 
+
 export const CATEGORIES = [
     {
         id: "1",
@@ -199,4 +200,5 @@ export const images = {
     star,
     trash,
     user,
+
 };
