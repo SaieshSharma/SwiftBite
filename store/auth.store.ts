@@ -7,22 +7,23 @@ type AuthState = {
     user: User | null;
     isLoading: boolean
 
-    setIsAuthenticated: (value :boolean) => void
+    setIsAuthenticated: (value: boolean) => void
     setUser: (user: User | null) => void
-    setLoading : (loading : boolean) => void
-    
+    setLoading: (loading: boolean) => void
+    setIsLoggedIn: (value: boolean) => void // Add this method
 
     fetchAuthenticatedUser: () => Promise<void>;
 }
 
 const useAuthStore = create<AuthState>((set) => ({
     isAuthenticated: false,
-    user: null,
+    user: null, // Fix: was "User | null" instead of null
     isLoading: true,
 
     setIsAuthenticated: (value) => set({isAuthenticated: value}),
     setUser: (user) => set({user}),
-    setLoading: (value) => set({isLoading : value}),
+    setLoading: (value) => set({isLoading: value}),
+    setIsLoggedIn: (value) => set({isAuthenticated: value}), // Add this implementation
 
     fetchAuthenticatedUser: async() => {
         set({isLoading: true});
@@ -30,8 +31,11 @@ const useAuthStore = create<AuthState>((set) => ({
         try{
             const user = await getCurrentUser();
 
-            if(user) set({isAuthenticated: true, user: user as User})
-            else set({isAuthenticated: false, user: null })
+            if(user) {
+                set({isAuthenticated: true, user: user as User});
+            } else {
+                set({isAuthenticated: false, user: null});
+            }
         }
         catch(e){
             console.log('fetchAuthenticatedUser error', e);

@@ -7,6 +7,7 @@ import CustomInput from '@/components/CustomInput'
 import { signIn } from '@/lib/appwrite'
 import useAuthStore from '@/store/auth.store'
 import * as Sentry from "@sentry/react-native"
+import { getCurrentUser } from '@/lib/appwrite'
 
 const SignIn = () => {
   const { fetchAuthenticatedUser, user, isAuthenticated } = useAuthStore();
@@ -25,6 +26,19 @@ const SignIn = () => {
       if (isAuthenticated && user) {
         router.replace('/');
         return;
+      }
+
+            // Try to get current user first (check if session exists)
+      try {
+        const currentUser = await getCurrentUser();
+        if (currentUser) {
+          // User already has an active session
+          await fetchAuthenticatedUser();
+          router.replace('/');
+          return;
+        }
+      } catch (error) {
+        // No active session, proceed with sign in
       }
 
       //Calling Appwrite Sign In Function
