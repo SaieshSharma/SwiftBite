@@ -1,3 +1,42 @@
+
+# 🍔 SwiftBite – Fast Food Delivery App
+
+
+## 📦 Download APK & Try It Out!
+
+**🔗 [.apk Download](https://expo.dev/accounts/saieshsharma/projects/fast_food/builds/6682d0ac-f988-4228-bb2e-c3f9b017448b)**  
+Press Install below Build Artifact
+Scan the QR code below to install and explore the app:
+
+<p align="center">
+  <img src="qr-code-image.png" alt="Download APK QR" width="200" />
+</p>
+
+---
+
+## 📱 App Features
+
+- 🔐 Secure Authentication with **Appwrite**
+- 🏠 Home screen with categories & featured items
+- 🔍 Search page with category filters
+- 🍔 Product detail view with images and pricing
+- 🛒 Cart system with real-time total
+- 👤 Profile page with settings
+- 📦 Backend powered by **Appwrite DB & Storage**
+- 📲 Built with **EAS** and supports **Over-the-Air (OTA) Updates**
+- 📊 Monitored using **Sentry** for production stability
+
+---
+
+## 🧰 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/)
+- [Expo CLI](https://docs.expo.dev/get-started/installation/)
+- Git, VS Code
+- Appwrite project credentials
+
 ## <a name="quick-start">🤸 Quick Start</a>
 
 Follow these steps to set up the project locally on your machine.
