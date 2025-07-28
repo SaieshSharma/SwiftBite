@@ -32,12 +32,17 @@ export const createUser = async ({email, password, name} : CreateUserParams) => 
 
         if(!newAccount) throw Error;
 
-        await signIn({email, password});
+        const session = await signIn({email, password}); // Capture the session from signIn
 
         const avatarUrl = avatars.getInitialsURL(name);
 
+<<<<<<< HEAD
         return await databases.createDocument(
             appwriteConfig.databaseId,
+=======
+        await databases.createDocument(
+            appwriteConfig.databseId,
+>>>>>>> 3b0f49beebc9a0f7f5c6eba5cf9837b3cd6ad600
             appwriteConfig.userCollectionId,
             ID.unique(),
             {   email,name,
@@ -46,6 +51,8 @@ export const createUser = async ({email, password, name} : CreateUserParams) => 
 
             }
         )
+
+        return session; // Return the session
 
     }
     catch(e){
@@ -56,7 +63,7 @@ export const createUser = async ({email, password, name} : CreateUserParams) => 
 export const signIn =  async ({email,password}: SignInParams) => {
     try{
         const session = await account.createEmailPasswordSession(email, password);
-
+        return session; // Return the session object
     }
     catch(e){
         throw new Error(e as string);
