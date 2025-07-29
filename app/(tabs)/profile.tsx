@@ -6,8 +6,7 @@ import { images } from '@/constants';
 import { signOut } from '@/lib/appwrite';
 
 const Profile = () => {
-
- const { user, signOut: storeSignOut } = useAuthStore();
+  const { user, setUser, setIsAuthenticated } = useAuthStore();
 
   const handleSignOut = async () => {
     Alert.alert(
@@ -23,7 +22,9 @@ const Profile = () => {
           style: "destructive",
           onPress: async () => {
             try {
-              await storeSignOut();
+              await signOut();
+              setUser(null);
+              setIsAuthenticated(false);
               router.replace('/SignIn');
             } catch (error) {
               Alert.alert("Error", "Failed to sign out");
@@ -111,17 +112,17 @@ const Profile = () => {
             </View>
 
             {/* User Details */}
-<View className="flex-1">
-  <Text className="text-xl font-bold text-dark-100 mb-1">
-    {user?.name || 'User'}  {/* Changed from username to name */}
-  </Text>
-  <Text className="text-gray-500 mb-2">
-    {user?.email || 'user@example.com'}
-  </Text>
-  <TouchableOpacity className="bg-primary/10 px-3 py-1 rounded-full self-start">
-    <Text className="text-primary text-sm font-medium">Premium Member</Text>
-  </TouchableOpacity>
-</View>
+            <View className="flex-1">
+              <Text className="text-xl font-bold text-dark-100 mb-1">
+                {user?.name || 'User'}
+              </Text>
+              <Text className="text-gray-500 mb-2">
+                {user?.email || 'user@example.com'}
+              </Text>
+              <TouchableOpacity className="bg-primary/10 px-3 py-1 rounded-full self-start">
+                <Text className="text-primary text-sm font-medium">Premium Member</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
 
@@ -170,15 +171,7 @@ const Profile = () => {
           ))}
         </View>
 
-        {/* App Info */}
-        <View className="px-5 py-4 border-t border-gray-100">
-          <Text className="text-gray-400 text-sm text-center mb-2">
-            Fast Food Delivery v1.0.0
-          </Text>
-          <Text className="text-gray-400 text-xs text-center">
-            Made with ❤️ for food lovers
-          </Text>
-        </View>
+ 
 
         {/* Sign Out Button */}
         <View className="px-5 py-6">

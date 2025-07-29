@@ -1,74 +1,64 @@
-import { getCurrentUser, signOut as appwriteSignOut } from '@/lib/appwrite';
-import { create } from 'zustand'
-
-type User = {
-    $id: string;
-    email: string;
-    name: string;
-    accountId: string;
-    avatar: string;
-}
+import { getCurrentUser } from '@/lib/appwrite';
+import { User } from '@sentry/react-native';
+import { create } from 'zustand';
 
 type AuthState = {
-    isAuthenticated: boolean
-    user: User | null;
-    isLoading: boolean
+  isAuthenticated: boolean;
+  user: User | null;
+  isLoading: boolean;
 
-    setIsAuthenticated: (value: boolean) => void
-    setUser: (user: User | null) => void
-    setLoading: (loading: boolean) => void
+  setIsAuthenticated: (value: boolean) => void;
+  setUser: (user: User | null) => void;
+  setLoading: (loading: boolean) => void;
 
-    fetchAuthenticatedUser: () => Promise<void>;
-    signOut: () => Promise<void>;
-}
+  fetchAuthenticatedUser: () => Promise<void>;
+  logout: () => void;
+};
 
 const useAuthStore = create<AuthState>((set) => ({
-    isAuthenticated: false,
-    user: null,
-    isLoading: false, // Changed from true to false initially
+  isAuthenticated: false,
+  user: null,
+  isLoading: true,
 
-    setIsAuthenticated: (value) => set({isAuthenticated: value}),
-    setUser: (user) => set({user}),
-    setLoading: (value) => set({isLoading: value}),
+  setIsAuthenticated: (value) => set({ isAuthenticated: value }),
+  setUser: (user) => set({ user }),
+  setLoading: (value) => set({ isLoading: value }),
 
-    fetchAuthenticatedUser: async() => {
-        set({isLoading: true});
+  fetchAuthenticatedUser: async () => {
+    set({ isLoading: true });
 
-        try{
-            const userData = await getCurrentUser();
+    try {
+      const user = await getCurrentUser();
 
-            if(userData) {
-                const user: User = {
-                    $id: (userData as any).$id,
-                    email: (userData as any).email,
-                    name: (userData as any).name,
-                    accountId: (userData as any).accountId,
-                    avatar: (userData as any).avatar,
-                };
-                set({isAuthenticated: true, user});
-            } else {
-                set({isAuthenticated: false, user: null});
-            }
-        }
-        catch(e: any){
-            console.log('fetchAuthenticatedUser error', e);
-            set({isAuthenticated: false, user: null});
-        }
-        finally{
-            set({isLoading: false})
-        }
-    },
-
-    signOut: async() => {
-        try {
-            await appwriteSignOut();
-            set({isAuthenticated: false, user: null});
-        } catch (error) {
-            console.log('Sign out error:', error);
-            set({isAuthenticated: false, user: null});
-        }
+      if (user && user.$id) {
+        set({
+          isAuthenticated: true,
+          user: user as User,
+        });
+      } else {
+        set({
+          isAuthenticated: false,
+          user: null,
+        });
+      }
+    } catch (e) {
+      console.log('fetchAuthenticatedUser error', e);
+      set({
+        isAuthenticated: false,
+        user: null,
+      });
+    } finally {
+      set({ isLoading: false });
     }
+  },
 
-}))
+  logout: () => {
+    set({
+      isAuthenticated: false,
+      user: null,
+      isLoading: false,
+    });
+  },
+}));
 
 export default useAuthStore;

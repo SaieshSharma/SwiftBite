@@ -17,7 +17,6 @@ const CustomButton = ({
 
 
     <TouchableOpacity className={cn ('custom-btn',style)}  onPress={onPress}>
-
         {leftIcon}
         <View className='flex-center flex-row'>
             {
