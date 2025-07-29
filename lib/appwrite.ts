@@ -198,3 +198,36 @@ export const signOut = async () => {
     throw new Error(error?.message || 'Failed to sign out');
   }
 };
+
+export const checkActiveSession = async () => {
+  try {
+    const session = await account.getSession('current'); // Get the current session
+    return session !== null; // Return true if there is an active session
+  } catch (error : any) {
+    // If there's an error (e.g., no active session), handle it appropriately
+    if (error.code === 401) {
+      return false; // No active session
+    }
+    throw error; // Re-throw other unexpected errors
+  }
+};
+
+
+export const deleteSessions = async () => {
+  try {
+    // Get the list of all sessions
+    const sessions = await account.listSessions();
+
+    // Delete each session
+    await Promise.all(
+      sessions.sessions.map(async (session) => {
+        await account.deleteSession(session.$id);
+      })
+    );
+
+    console.log('All sessions deleted successfully');
+  } catch (error : any) {
+    console.error('Error deleting sessions:', error.message);
+    throw error; // Re-throw the error for further handling
+  }
+};

@@ -7,6 +7,7 @@ import CustomInput from '@/components/CustomInput'
 import { signIn, account } from '@/lib/appwrite'
 import useAuthStore from '@/store/auth.store'
 import * as Sentry from "@sentry/react-native"
+import { checkActiveSession , deleteSessions} from '@/lib/appwrite'
 
 const SignIn = () => {
   const { fetchAuthenticatedUser, user, isAuthenticated } = useAuthStore();
@@ -21,18 +22,28 @@ const SignIn = () => {
     setIsSubmitting(true);
 
     try {
-      // Check if user is already authenticated
-      if (isAuthenticated && user) {
-        router.replace('/');
-        return;
+
+       // Check for an active session
+      const activeSession = await checkActiveSession();
+
+      if (activeSession) {
+        // Delete the active sessions if one exists
+        await deleteSessions();
       }
 
-      // Clear any existing sessions first (for internal builds)
-      try {
-        await account.deleteSessions();
-      } catch (clearError) {
-        // Ignore errors when clearing sessions
-      }
+
+      // Check if user is already authenticated
+      // if (isAuthenticated && user) {
+      //   router.replace('/');
+      //   return;
+      // }
+
+      // // Clear any existing sessions first (for internal builds)
+      // try {
+      //   await account.deleteSessions();
+      // } catch (clearError) {
+      //   // Ignore errors when clearing sessions
+      // }
 
       // Now try to sign in
       await signIn({ email, password });
