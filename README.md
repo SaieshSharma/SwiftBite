@@ -1,30 +1,46 @@
-
 # 🍔 SwiftBite – Fast Food Delivery App
 
-
-## 📦 Download APK & Try It Out!
-
-**🔗 [.apk Download](https://expo.dev/accounts/saieshsharma/projects/fast_food/builds/6682d0ac-f988-4228-bb2e-c3f9b017448b)**  
-Press Install below Build Artifact
-Scan the QR code below to install and explore the app:
-
-<p align="center">
-  <img src="qr-code-image.png" alt="Download APK QR" width="200" />
-</p>
+<div>
+  <img src="https://img.shields.io/badge/-React_Native-black?style=for-the-badge&logoColor=white&logo=react&color=61DAFB" alt="React Native" />
+  <img src="https://img.shields.io/badge/-Expo-black?style=for-the-badge&logoColor=white&logo=expo&color=000020" alt="Expo" />
+  <img src="https://img.shields.io/badge/-Appwrite-black?style=for-the-badge&logoColor=white&logo=appwrite&color=F02E65" alt="Appwrite" />
+  <img src="https://img.shields.io/badge/-Tailwind-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="Tailwind" />
+  <img src="https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="TypeScript" />
+</div>
 
 ---
 
+## 📆 Download APK & Try It Out!
+
+**🔗 [.apk Download](https://expo.dev/accounts/saieshsharma/projects/fast_food/builds/2ba61cb6-a8cc-4f12-bcb3-1fea39001332)**
+Press **Install** below the Build Artifact.
+
+Scan the QR code below to install and explore the app:
+
+<img src="./assets/SwiftBite_QR.png" alt="SwiftBite QR Code" width="200"/>
+
+---
+
+## 🧱 Tech Stack
+* The app leverages the following technologies:
+* React Native (Expo) – Cross-platform mobile development
+* TypeScript – Strongly typed JavaScript for better tooling and scalability
+* Appwrite – Authentication, Database, and File Storage
+* Tailwind CSS (via NativeWind) – Utility-first styling for React Native
+* EAS Build & Expo OTA – Cloud builds and seamless over-the-air updates
+* Sentry – Real-time error monitoring and performance insights
+  
+---
 ## 📱 App Features
 
-- 🔐 Secure Authentication with **Appwrite**
-- 🏠 Home screen with categories & featured items
-- 🔍 Search page with category filters
-- 🍔 Product detail view with images and pricing
-- 🛒 Cart system with real-time total
-- 👤 Profile page with settings
-- 📦 Backend powered by **Appwrite DB & Storage**
-- 📲 Built with **EAS** and supports **Over-the-Air (OTA) Updates**
-- 📊 Monitored using **Sentry** for production stability
+* 🔐 Secure Authentication with **Appwrite**
+* 🏠 Home screen with categories & featured items
+* 🔍 Search page with category filters
+* 🛒 Cart system with real-time total
+* 👤 Profile page with settings
+* 📦 Backend powered by **Appwrite DB & Storage**
+* 📲 Built with **EAS** and supports **Over-the-Air (OTA) Updates**
+* 📊 Monitored using **Sentry** for production stability
 
 ---
 
@@ -32,53 +48,82 @@ Scan the QR code below to install and explore the app:
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/)
-- [Expo CLI](https://docs.expo.dev/get-started/installation/)
-- Git, VS Code
-- Appwrite project credentials
+* [Node.js](https://nodejs.org/)
+* [Expo CLI](https://docs.expo.dev/get-started/installation/)
+* Git, IDE(VS Code)
+* Appwrite project credentials
 
-## <a name="quick-start">🤸 Quick Start</a>
+---
 
-Follow these steps to set up the project locally on your machine.
+## 🤸 Quick Start
 
-**Prerequisites**
-
-Make sure you have the following installed on your machine:
-
-- **[Git](https://git-scm.com/)**
-- **[Node.js](https://nodejs.org/en)**
-- **[npm](https://www.npmjs.com/)** _(Node Package Manager)_
-
-**Cloning the Repository**
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/adrianhajdin/food_ordering.git
-cd food_ordering
+git clone https://github.com/SaieshSharma/SwiftBite.git
+cd SwiftBite
 ```
 
-**Installation**
-
-Install the project dependencies using npm:
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-**Set Up Environment Variables**
+### 3. Set Up Environment Variables
 
-Create a new file named `.env` in the root of your project and add the following content:
+Create a `.env` file in the root of your project and add:
 
 ```env
-EXPO_PUBLIC_APPWRITE_PROJECT_ID=
-EXPO_PUBLIC_APPWRITE_ENDPOINT=
+EXPO_PUBLIC_APPWRITE_PROJECT_ID=68854531000be25dc105
+EXPO_PUBLIC_APPWRITE_ENDPOINT=https://fra.cloud.appwrite.io/v1
 ```
 
-Replace the placeholder values with your actual credentials by signing up on the **[Appwrite](https://jsm.dev/rn-food-appwrite)** dashboard.
+Replace these with your actual credentials from the [Appwrite Dashboard](https://console.appwrite.io/).
 
-**Running the Project**
+### 4. Run the App Locally
 
 ```bash
 npx expo start
 ```
 
-Open your ExpoGO app on your phone and scan the QR code to view the project.
+### If any Issues , Try starting the app by clearing the cache
+
+```bash
+npx expo start --clear
+```
+
+Scan the QR code from your terminal or browser using **Expo Go**.
+
+---
+
+## 🚀 Deployment & Production Highlights
+
+* ✅ Created signed production builds using **EAS Build**
+* 🔄 Integrated **OTA Updates** using Expo's pipeline
+* 🧪 Tested builds on **Expo Go** and custom APKs
+* 📲 Ready for deployment on **Google Play** and **App Store**
+
+---
+
+## 🔮 Future Improvements
+
+Some possible upgrades:
+
+* 🍔 Product detail view with images and pricing
+* 📍 Location-based restaurant search
+* 💳 Payment gateway integration (Stripe/Razorpay)
+* 📦 Real-time order tracking
+* 🗃️ Order history + reordering
+* 🌐 Multi-language support
+* 🔔 Push notifications
+
+---
+
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).
+
+---
+
+Built with ❤️ by **Saiesh Sharma**
