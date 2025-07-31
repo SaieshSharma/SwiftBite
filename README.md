@@ -1,10 +1,9 @@
 # 🍔 SwiftBite – Fast Food Delivery App
 
-<<<<<<< HEAD
 
 ## 📦 Download APK & Try It Out!
 
-**🔗 [.apk Download](https://expo.dev/accounts/saieshsharma/projects/fast_food/builds/6682d0ac-f988-4228-bb2e-c3f9b017448b)**  
+**🔗 [.apk Download](https://expo.dev/accounts/saieshsharma/projects/fast_food/builds/2ba61cb6-a8cc-4f12-bcb3-1fea39001332)**  
 Press Install below Build Artifact
                OR
 Scan the QR code below to install and explore the app:
