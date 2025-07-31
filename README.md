@@ -1,17 +1,4 @@
 # 🍔 SwiftBite – Fast Food Delivery App
-
-
-## 📦 Download APK & Try It Out!
-
-**🔗 [.apk Download](https://expo.dev/accounts/saieshsharma/projects/fast_food/builds/2ba61cb6-a8cc-4f12-bcb3-1fea39001332)**  
-Press Install below Build Artifact
-               OR
-Scan the QR code below to install and explore the app:
-
-<p align="center">
-  <img src="./assets/SwiftBite_QR.png" alt="Download APK QR" width="200" />
-</p>
-=======
 <div>
   <img src="https://img.shields.io/badge/-React_Native-black?style=for-the-badge&logoColor=white&logo=react&color=61DAFB" alt="React Native" />
   <img src="https://img.shields.io/badge/-Expo-black?style=for-the-badge&logoColor=white&logo=expo&color=000020" alt="Expo" />
@@ -19,9 +6,7 @@ Scan the QR code below to install and explore the app:
   <img src="https://img.shields.io/badge/-Tailwind-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="Tailwind" />
   <img src="https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="TypeScript" />
 </div>
->>>>>>> 996f0fe9389b02b71466ea8078b6e9741f84649e
 
----
 
 ## 📆 Download APK & Try It Out!
 
