@@ -10,12 +10,8 @@
 
 ## 📆 Download APK & Try It Out!
 
-**🔗 [.apk Download](https://expo.dev/accounts/saieshsharma/projects/fast_food/builds/2ba61cb6-a8cc-4f12-bcb3-1fea39001332)**
+**🔗 [.apk Download](https://expo.dev/accounts/saieshsharma/projects/fast_food/builds/da252197-49fa-4e00-8d0d-a1f6c092d542)**
 Press **Install** below the Build Artifact.
-
-Scan the QR code below to install and explore the app:
-
-<img src="./assets/SwiftBite_QR.png" alt="SwiftBite QR Code" width="200"/>
 
 ---
 
