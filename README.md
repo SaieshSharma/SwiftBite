@@ -10,8 +10,10 @@
 
 ## 📆 Download APK & Try It Out!
 
-**🔗 [.apk Download](https://expo.dev/accounts/saieshsharma/projects/fast_food/builds/da252197-49fa-4e00-8d0d-a1f6c092d542)**
+**🔗 [.apk Download] https://expo.dev/accounts/saieshsharma/projects/fast_food/builds/526548d8-f29d-4f5d-b82c-3473b67fd22b**
 Press **Install** below the Build Artifact.
+
+<img width="337" height="336" alt="image" src="https://github.com/user-attachments/assets/b12648c3-c298-41c2-8f71-7fe2bb20e207" />
 
 ---
 
